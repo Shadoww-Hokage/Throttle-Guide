@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ profile.user.username }}'s Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background-color: #343a40;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar h1 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        .navbar a {
+            color: #ffffff;
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 1rem;
+            transition: color 0.3s;
+        }
+
+        .navbar a:hover {
+            color: #007bff;
+        }
+
+        .navbar .logout {
+            color: #dc3545;
+        }
+
+        .profile-header {
+            background-color: #ffffff;
+            padding: 20px;
+            border-bottom: 1px solid #e1e4e8;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 20px auto;
+        }
+
+        .profile-header img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 20px;
+        }
+
+        .profile-info {
+            flex: 1;
+        }
+
+        .profile-info h1 {
+            margin: 0;
+            font-size: 2rem;
+            color: #343a40;
+        }
+
+        .profile-info p {
+            margin: 5px 0;
+            color: #495057;
+        }
+
+        .profile-info button {
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+
+        .profile-info button:hover {
+            background-color: #0056b3;
+        }
+
+        .followers-following {
+            display: flex;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 20px auto;
+        }
+
+        .followers-following h2 {
+            margin: 0;
+            color: #343a40;
+        }
+
+        .followers-following ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .followers-following li {
+            background: #ffffff;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+            color: #495057;
+        }
+
+        .profile-image {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .profile-image img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .footer {
+            background-color: #343a40;
+            color: #ffffff;
+            text-align: center;
+            padding: 10px 20px;
+            box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+            margin-top: auto;
+        }
+
+        .footer p {
+            margin: 5px 0;
+        }
+
+        .footer a {
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            color: #007bff;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navbar">
+        <a href=""><h1>Throttle Guide</h1></a>
+        <div>
+            {% if user.is_authenticated %}
+            <a href="/create_cars">Add Cars</a>
+            <a href="/read_cars">Show Cars</a>
+            <a href="/read_profile">Show Profile</a>
+            <a href="/show_users">Show Users</a>
+            <a href="/logout" class="logout">Logout</a>
+            {% else %}
+            <a href="/register">Register</a>
+            <a href="/login">Login</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="profile-header">
+        <img src="{{ profile.profile.url }}" alt="Profile image">
+        <div class="profile-info">
+            <h1>{{ profile.user.username }}</h1>
+            <p><strong>Bio:</strong> {{ profile.bio }}</p>
+            <p><strong>Location:</strong> {{ profile.location }}</p>
+            <p><strong>Birth Date:</strong> {{ profile.birth_date }}</p>
+            <!-- <form action="/follow_user/{{ profile.user.id }}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="profile_id" value="{{ profile.id }}">
+                <button type="submit">
+                    {% if user_has_liked %}
+                    Unfollow
+                    {% else %}
+                    Follow
+                    {% endif %}
+                </button>
+            </form> -->
+        </div>
+    </div>
+
+    <div class="followers-following">
+        <div class="followers">
+            <h2>Followers</h2>
+            <ul>
+                {% for follow in followers %}
+                <li>{{ follow.follower.username }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="following">
+            <h2>Following</h2>
+            <ul>
+                {% for follow in following %}
+                <li>{{ follow.following.username }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    
+
+    <div class="footer">
+        <p>&copy; 2024 Throttle Guide. All rights reserved.</p>
+        <p>Contact us at <a href="mailto:contact@throttleguide.com">contact@throttleguide.com</a></p>
+    </div>
+</body>
+
+</html>

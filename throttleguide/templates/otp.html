@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OTP Verification</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background-color: #343a40;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar h1 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        .navbar a {
+            color: #ffffff;
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 1rem;
+            transition: color 0.3s;
+        }
+
+        .navbar a:hover {
+            color: #007bff;
+        }
+
+        .navbar .logout {
+            color: #dc3545;
+        }
+
+        .form-container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-container h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+
+        .form-container form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .form-container input[type="number"],
+        .form-container input[type="submit"] {
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .form-container input[type="submit"] {
+            background-color: #343a40;
+            color: #ffffff;
+            cursor: pointer;
+            border: none;
+        }
+
+        .form-container input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .footer {
+            background-color: #343a40;
+            color: #ffffff;
+            text-align: center;
+            padding: 10px 20px;
+            box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .footer p {
+            margin: 5px 0;
+        }
+
+        .footer a {
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            color: #007bff;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navbar">
+        <a href=""><h1>Throttle Guide</h1></a>
+        <div>
+            {% if user.is_authenticated %}
+            <a href="/create_cars">Add Cars</a>
+            <a href="/read_cars">Show Cars</a>
+            <a href="/read_profile">Show Profile</a>
+            <a href="/show_users">Show Users</a>
+            <a href="/logout" class="logout">Logout</a>
+            {% else %}
+            <a href="/register">Register</a>
+            <a href="/login">Login</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="form-container">
+        <h1>OTP Verification</h1>
+        <form method="POST">
+            {% csrf_token %}
+            <label for="otp">OTP</label>
+            <input type="number" name="otp" id="otp" required>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2024 Throttle Guide. All rights reserved.</p>
+        <p>Contact us at <a href="mailto:contact@throttleguide.com">contact@throttleguide.com</a></p>
+    </div>
+</body>
+
+</html>

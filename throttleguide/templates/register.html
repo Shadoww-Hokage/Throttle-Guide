@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Throttle Guide - Register</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #f8f9fa, #e9ecef);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            height: 100vh;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .navbar {
+            background-color: #343a40;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar h1 {
+            color: #ffffff;
+            font-size: 2rem;
+            margin: 0;
+        }
+
+        .navbar a {
+            color: #ffffff;
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 1.1rem;
+            transition: color 0.3s ease-in-out;
+        }
+
+        .navbar a:hover {
+            color: #007bff;
+        }
+
+        .navbar .logout {
+            color: #dc3545;
+        }
+
+        h1 {
+            text-align: center;
+            color: #495057;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 2.5rem;
+            animation: slideInDown 0.8s ease-in-out;
+        }
+
+        @keyframes slideInDown {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .form-container {
+            background: rgba(255, 255, 255, 0.15); /* Glassmorphic effect */
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            max-width: 400px;
+            width: 100%;
+            margin: 20px auto;
+            animation: zoomIn 0.5s ease-in-out;
+        }
+
+        @keyframes zoomIn {
+            from {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0 auto;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            color: #495057;
+        }
+
+        th {
+            width: 40%;
+            font-weight: normal;
+        }
+
+        input[type="text"], input[type="email"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ced4da;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease, border-width 0.3s ease;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus {
+            border-color: #007bff;
+            border-width: 2px;
+            outline: none;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            padding: 15px 0;
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .error-message {
+            color: #dc3545;
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        footer {
+            background-color: #343a40;
+            color: #ffffff;
+            text-align: center;
+            padding: 10px 20px;
+            box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        footer p {
+            margin: 5px 0;
+        }
+
+        footer a {
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href=""><h1>Throttle Guide</h1></a>
+        <div>
+            {% if user.is_authenticated %}
+            <a href="/create_cars">Add Cars</a>
+            <a href="/read_cars">Show Cars</a>
+            <a href="/read_profile">Show Profile</a>
+            <a href="/show_users">Show Users</a>
+            <a href="/logout" class="logout">Logout</a>
+            {% else %}
+            <!-- <a href="/register">Register</a> -->
+            <a href="/login">Login</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <h1>Register</h1>
+
+    <div class="form-container">
+        <table>
+            <form method="POST">
+                {% csrf_token %}
+                <tr>
+                    <th>Username</th>
+                    <td><input type="text" name="username" id="username" required></td>
+                </tr>
+                <tr>
+                    <th>First Name</th>
+                    <td><input type="text" name="first_name" id="first_name" required></td>
+                </tr>
+                <tr>
+                    <th>Last Name</th>
+                    <td><input type="text" name="last_name" id="last_name" required></td>
+                </tr>
+                <tr>
+                    <th>Email</th>
+                    <td><input type="email" name="email" id="email" required></td>
+                </tr>
+                <tr>
+                    <th>Password</th>
+                    <td><input type="password" name="password" id="password" required></td>
+                </tr>
+                <tr>
+                    <th>Confirm Password</th>
+                    <td><input type="password" name="confirm_password" id="confirm_password" required></td>
+                </tr>
+                <tr>
+                    <th colspan="2" align="center">
+                        <input type="submit" value="Submit">
+                    </th>
+                </tr>
+            </form>
+        </table>
+    </div>
+
+    <h3 class="error-message" align="center">{{error}}</h3>
+
+    <footer>
+        <p>&copy; 2024 Throttle Guide. All rights reserved.</p>
+        <p>Contact us at <a href="mailto:contact@throttleguide.com">contact@throttleguide.com</a></p>
+    </footer>
+</body>
+</html>

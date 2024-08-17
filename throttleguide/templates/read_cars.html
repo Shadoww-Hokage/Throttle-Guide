@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Show Cars</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .navbar {
+            background-color: #343a40;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar h1 {
+            color: #ffffff;
+            font-size: 2rem;
+            margin: 0;
+        }
+
+        .navbar a {
+            color: #ffffff;
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 1.1rem;
+            transition: color 0.3s ease-in-out;
+        }
+
+        .navbar a:hover {
+            color: #007bff;
+        }
+
+        .navbar .logout {
+            color: #dc3545;
+        }
+
+        .content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            padding: 20px;
+            animation: zoomIn 0.5s ease-in-out;
+        }
+
+        @keyframes zoomIn {
+            from {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.2); /* Glassmorphic effect */
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            margin: 15px;
+            width: 300px;
+            overflow: hidden;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        .card img {
+            width: 100%;
+            height: auto;
+        }
+
+        .card-content {
+            padding: 15px;
+        }
+
+        .card-content h3 {
+            margin: 0;
+            color: #495057;
+            font-size: 1.2rem;
+        }
+
+        .card-content p {
+            color: #6c757d;
+            font-size: 0.9rem;
+            margin: 5px 0;
+        }
+
+        .card-content a {
+            color: #007bff;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease-in-out;
+        }
+
+        .card-content a:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            background-color: #343a40;
+            color: #ffffff;
+            text-align: center;
+            padding: 10px 20px;
+            box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        footer p {
+            margin: 5px 0;
+        }
+
+        footer a {
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href=""><h1>Throttle Guide</h1></a>
+        <div>
+            {% if user.is_authenticated %}
+            <a href="/create_cars">Add Cars</a>
+            <a href="/read_cars">Show Cars</a>
+            <a href="/read_profile">Show Profile</a>
+            <a href="/show_users">Show Users</a>
+            <a href="/logout" class="logout">Logout</a>
+            {% else %}
+            <a href="/register">Register</a>
+            <a href="/login">Login</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="content">
+        {% for x in data %}
+        <div class="card">
+            <a href="/read_detail_cars/{{x.id}}"><img src="{{x.image.url}}" alt="Car Image"></a>
+            <div class="card-content">
+                <h3>{{x.name}}</h3>
+                <p>Category: {{x.category}}</p>
+                <p>Manufacturer: {{x.manufacturer}}</p>
+                <p>Released: {{x.released}}</p>
+                <p>Mileage: {{x.mileage}}</p>
+                <p>Rating: {{x.rating}}</p>
+                <p>Engine: {{x.engine}}</p>
+                <p><a href="/update_cars/{{x.id}}">Update</a> | <a href="/delete_cars/{{x.id}}">Delete</a></p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Throttle Guide. All rights reserved.</p>
+        <p>Contact us at <a href="mailto:contact@throttleguide.com">contact@throttleguide.com</a></p>
+    </footer>
+</body>
+</html>
