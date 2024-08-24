@@ -254,7 +254,7 @@
         </div>
 
         <div class="comments-section">
-            <form action="/add_comment/{{x.id}}" method="POST">
+            <form action="/read_detail_cars/{{x.id}}" method="POST">
                 {% csrf_token %}
                 <input type="text" name="comments" placeholder="Add a comment...">
                 <input type="submit" value="Submit">
@@ -262,7 +262,7 @@
             <h3>Comments:</h3>
             {% for c in comment %}
             <ul>
-                <li>{{c.comments}}</li>
+                <li><strong>{{c.user.username}} : </strong>{{c.comments}}</li>
             </ul>
             {% endfor %}
         </div>

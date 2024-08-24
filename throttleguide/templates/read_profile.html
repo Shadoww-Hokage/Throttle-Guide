@@ -135,6 +135,49 @@
             object-fit: cover;
         }
 
+        .posts-container {
+            max-width: 1200px;
+            margin: 20px auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .post {
+            background-color: #ffffff;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .post h3 {
+            margin: 0 0 10px;
+            color: #343a40;
+            font-size: 1.2rem;
+        }
+
+        .post img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin: 10px 0;
+        }
+
+        .post-time,
+        .like-count {
+            color: #6c757d;
+            font-size: 0.8rem;
+        }
+
+        .post-time {
+            margin-top: 10px;
+        }
+
+        .like-count {
+            margin-top: 5px;
+        }
+
         .footer {
             background-color: #343a40;
             color: #ffffff;
@@ -182,18 +225,7 @@
             <h1>{{ profile.user.username }}</h1>
             <p><strong>Bio:</strong> {{ profile.bio }}</p>
             <p><strong>Location:</strong> {{ profile.location }}</p>
-            <p><strong>Birth Date:</strong> {{ profile.birth_date }}</p>
-            <!-- <form action="/follow_user/{{ profile.user.id }}" method="POST">
-                {% csrf_token %}
-                <input type="hidden" name="profile_id" value="{{ profile.id }}">
-                <button type="submit">
-                    {% if user_has_liked %}
-                    Unfollow
-                    {% else %}
-                    Follow
-                    {% endif %}
-                </button>
-            </form> -->
+            <p><strong>Birth Date:</strong> {{ profile.dob }}</p>
         </div>
     </div>
 
@@ -216,7 +248,16 @@
         </div>
     </div>
 
-    
+    <div class="posts-container">
+        {% for post in post %}
+        <div class="post">
+            <h3>{{ post.caption }}</h3>
+            <a href="/read_detail_cars/{{post.id}}"><img src="{{ post.image.url }}" alt="{{ post.caption }}"></a>
+            <p class="post-time">Posted on: {{ post.created_at }}</p>
+            <p class="like-count">Likes: {{ post.no_of_likes }}</p>
+        </div>
+        {% endfor %}
+    </div>
 
     <div class="footer">
         <p>&copy; 2024 Throttle Guide. All rights reserved.</p>

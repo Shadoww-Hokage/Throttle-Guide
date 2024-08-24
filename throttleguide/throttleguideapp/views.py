@@ -119,9 +119,16 @@ def read_profile(request):
     
     # Retrieve the user's profile or return a 404 if it doesn't exist
     profile = get_object_or_404(Profile, user=user)
+    post = Post.objects.filter(user=user).order_by('-created_at')
+
+    context = {}
+    
+    context['profile'] = profile
+    context['post'] = post
+
     
     # pass the profile to the template
-    return render(request, 'read_profile.html',{'profile' : profile})
+    return render(request, 'read_profile.html', context) 
 
 
 
@@ -227,7 +234,7 @@ def create_cars(request):
 
 def read_cars(request):
     
-    car = Post.objects.all()
+    car = Post.objects.all().exclude(user = request.user).order_by('-created_at')
     
     context = {}
     
@@ -283,10 +290,12 @@ def delete_cars(request, rid):
 def read_detail_cars(request, rid):
     
     car = Post.objects.filter(id = rid)
+    c = Post.objects.get(id = rid)
     
     p = Profile.objects.filter(id = rid)
+
     
-    c = Comments.objects.all().order_by('created_at')
+    c = Comments.objects.filter(post = c).order_by('-created_at')
     
    
     
@@ -332,40 +341,6 @@ def likes_count(request, post_id):
     
     post.save()
     return redirect('/read_cars')
-
-# def comments(request, rid):
-    
-#     if request.method == "GET":
-#         return render(request, 'create_comment.html')
-#     else:
-#         comments = request.POST['comments']
-        
-#         post = Post.objects.get(id = rid)
-        
-#         c = Comments.objects.create(post = post, user = request.user, comments = comments)
-#         c.save()
-        
-#         return HttpResponse("Commenst")
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
